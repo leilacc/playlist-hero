@@ -1,14 +1,52 @@
 <head>
-  <title>weplay</title>
+  <title>WePlay</title>
 </head>
 
 <body>
   {{loginButtons}}
-  {{> hello}}
+  {{> container}}
 </body>
 
-<template name="hello">
-  <h1>Hello World!</h1>
-  {{greeting}}
-  <input type="button" value="Click" />
+<template name="container">
+  {{#if curr_playlist }} 
+    {{> playlist}}
+  {{else}} 
+    {{> home}}
+  {{/if}}
 </template>
+
+<template name="home">
+  <h1>WePlay</h1>
+  <h3>Democratic playlists</h3>
+
+  {{create}}
+  <br>
+  <form id="create_playlist_form">
+      <input type="text" placeholder="Playlist name" id="playlist_name">
+      <input type="submit" value="Go" />
+  </form>
+
+  <br>
+  <br>
+{{#each playlists}}
+  {{this.name}}
+{{/each}}
+</template>
+
+<template name="playlist">
+  <h1>Playlist!</h1>
+</template>
+
+<template name="search">
+
+  {{search}}
+  <br>
+  <input type="text" placeholder="Playlist name" id="playlist_name">
+  <input type="button" value="Go" id="playlist_search" />
+
+  <br>
+  <br>
+
+</template>
+
+
