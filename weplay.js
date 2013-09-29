@@ -1,14 +1,22 @@
 var Playlists = new Meteor.Collection('playlists');
+var Tokens = new Meteor.Collection('tokens');
 
 if (Meteor.isClient) {
+  // init/change view code
+
   var playlists_loaded = false;
   window.Playlists = Playlists;
+  window.Tokens= Tokens;
   Session.setDefault('curr_playlist', null);
 
   Meteor.subscribe('playlists', function() {
     playlists_loaded = true;
     setPageState();
   });
+
+  window.onpopstate = function(event) {
+    setPageState();
+  };
 
   function setPageState() {
     if (!playlists_loaded) return;
@@ -21,17 +29,15 @@ if (Meteor.isClient) {
     return Session.get('curr_playlist');
   };
 
-  Template.home.create = function () {
-    return "Create a new playlist";
-  };
-
-  Template.home.search = function () {
-    return "Search existing playlists";
-  };
-
   Template.home.playlists = function() {
     return Playlists.find({}).fetch();
   };
+
+  Template.home.tokens = function() {
+    return Tokens.find({}).fetch();
+  };
+
+  // Homepage view
 
   Template.home.events({
     'submit #create_playlist_form' : function () {
@@ -58,10 +64,10 @@ if (Meteor.isClient) {
       history.pushState(null, null, '/' + (playlist ? playlist.name : ''));
   }
 
-  window.onpopstate = function(event) {
-    setPageState();
-  };
+  // Playlist view
+
 }
+
 
 if (Meteor.isServer) {
   Meteor.startup(function () {
@@ -69,7 +75,8 @@ if (Meteor.isServer) {
     Meteor.publish('playlists', function() {
       return Playlists.find({});
     });
+    Meteor.publish('tokens', function() {
+      return Tokens.find({});
+    });
   });
 }
-
-

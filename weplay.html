@@ -18,8 +18,9 @@
 <template name="home">
   <h1>WePlay</h1>
   <h3>Democratic playlists</h3>
+  {{get_token}}
 
-  {{create}}
+  Find or create a new playlist
   <br>
   <form id="create_playlist_form">
       <input type="text" placeholder="Playlist name" id="playlist_name">
@@ -28,25 +29,12 @@
 
   <br>
   <br>
-{{#each playlists}}
-  {{this.name}}
-{{/each}}
+  {{#each tokens}}
+    {{this.token}}
+  {{/each}}
 </template>
 
 <template name="playlist">
   <h1>Playlist!</h1>
 </template>
-
-<template name="search">
-
-  {{search}}
-  <br>
-  <input type="text" placeholder="Playlist name" id="playlist_name">
-  <input type="button" value="Go" id="playlist_search" />
-
-  <br>
-  <br>
-
-</template>
-
 
