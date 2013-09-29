@@ -29,7 +29,7 @@
 
 <template name="home">
   <header>
-  <h1 class="logo">WePlay</h1>
+  <h1 class="logo">Playlist Hero</h1>
   </header>
 
   <br>
@@ -38,19 +38,22 @@
       <input type="submit" value="Go" />
   </form>
 
-  <!--
   <div class="playlists_holder">
     Recent playlists
     <ul class="playlists">
+      {{#each playlists}}
+      <li>
+      <a href="/{{this.name}}">{{this.name}}</a>
+      </li>
+      {{/each}}
     </ul>
   </div>
-  -->
 </template>
 
 <template name="playlist">
   <header>
   <a href="/">
-    <h1 class="logo">WePlay</h1>
+    <h1 class="logo">Playlist Hero</h1>
   </a>
   <span class="playlist_name">listening to {{ playlist.name }}</a>
   </header>
