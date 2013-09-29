@@ -7,6 +7,10 @@ body {
   margin: 0;
 }
 
+#fblogin {
+  text-align: center;
+}
+
 header {
   text-align: center;
   padding-top: 15px;
@@ -17,15 +21,14 @@ a {
 }
 
 h1.logo {
+  color: #fefefe;
+  font-family: 'Lily Script One', sans-serif;
   font-size: 42pt;
-  text-transform: uppercase;
-  margin: 0 auto;
-  border-top: 10px solid red;
-  border-bottom: 10px solid red;
-  background: yellow;
-  color: red;
-  padding:  0;
-  width: 400px;
+  margin: 50px auto 20px auto;
+  border-top: 4px solid;
+  border-bottom: 4px solid;
+  padding: 0 0 7px 0;
+  width: 500px;
   cursor: pointer;
   text-align: center;
   text-decoration: none;
@@ -35,7 +38,7 @@ h1.logo {
   font-size: 21pt;
   font-weight: 400;
   display: inline-block;
-
+  padding-bottom: 20px;
 }
 
 header.small {
@@ -45,14 +48,17 @@ header.small {
 header.small h1.logo {
   margin: 0 15px;
   font-size: 21pt;
-  border-top-width: 5px;
-  border-bottom-width: 5px;
+  border-top-width: 3px;
+  border-bottom-width: 3px;
+  padding: 0 0 3px 0;
   width: 200px;
   display: inline-block;
 }
 
 h1.logo:hover {
-  color: black;
+  color: #666;
+  border-top: 4px solid #fefefe;
+  border-bottom: 4px solid #fefefe;
 }
 
 #login-buttons {
@@ -68,8 +74,12 @@ h3.tagline {
   color: rgb(198, 216, 213);
 }
 
-#create_playlist_form {
+#create_playlist_form, #search_form {
   text-align: center;
+}
+
+#nowPlaying {
+  padding: 20px auto;
 }
 
 input {
@@ -83,7 +93,11 @@ input {
 }
 
 input#playlist_name {
-  width: 330px;
+  width: 460px;
+}
+
+input#query {
+  width: 500px;
 }
 
 .playlists_holder {
@@ -96,6 +110,13 @@ ul {
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+ul.search-results {
+  margin-left: auto;
+  margin-right: auto;
+  width: 500px;
+  padding-top: 10px;
 }
 
 ul.playlists {
@@ -117,14 +138,19 @@ ul.playlists a:hover {
   background: rgba(0, 0, 0, 0.8);
 }
 
+input.add_track:hover {
+  background: #76EE00;
+}
+
 input.add_track {
-  background: green;
-  border-radius: 20px;
+  background: #4CBB17;
+  border: 0;
   color: #fff;
   width: 30px;
   display: inline-block;
   cursor: pointer;
   font-size: 12pt;
+  margin: 5px 10px;
 }
 
 .padding-container {

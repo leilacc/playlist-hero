@@ -167,7 +167,7 @@ if (Meteor.isClient) {
     'input #query': function() {
       var query = $('#query').val();
       if (query.length < 3) return;
-      SC.get('/tracks', { q: query, limit: 20, streamable: true }, function(tracks) {
+      SC.get('/tracks', { q: query, limit: 10, streamable: true }, function(tracks) {
           Session.set('search_results', tracks);
       });
       return false;

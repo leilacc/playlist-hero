@@ -2,15 +2,20 @@
   <script>
   </script>
   <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Lily+Script+One' rel='stylesheet' type='text/css'>
   <script src="//connect.soundcloud.com/sdk.js"></script>
   <script src="https://w.soundcloud.com/player/api.js"></script>
   <title>Playlist Hero</title>
 </head>
 
 <body>
-  {{loginButtons}}
+  <div id='fblogin'>
+    {{loginButtons}}
+  </div>
+
   <div id='nowPlaying'>
   </div>
+
   {{> container}}
 </body>
 
@@ -24,57 +29,58 @@
 
 <template name="home">
   <header>
-  <h1 class="logo">Playlist Hero</h1>
+  <h1 class="logo">WePlay</h1>
   </header>
 
   <br>
   <form id="create_playlist_form">
       <input type="text" placeholder="Playlist name" id="playlist_name">
-      <input type="submit" value="Create" />
+      <input type="submit" value="Go" />
   </form>
 
+  <!--
   <div class="playlists_holder">
     Recent playlists
-  <ul class="playlists">
-  {{#each playlists}}
-  <li><a href="/{{this.name}}">{{this.name}}</a></li>
-  {{/each}}
-  </ul>
-</div>
+    <ul class="playlists">
+    </ul>
+  </div>
+  -->
 </template>
 
 <template name="playlist">
-  <header class="small">
+  <header>
   <a href="/">
-  <h1 class="logo">Playlist Hero</h1>
+    <h1 class="logo">WePlay</h1>
   </a>
-  <span class="playlist_name">{{ playlist.name }}</a>
+  <span class="playlist_name">listening to {{ playlist.name }}</a>
   </header>
 
-  <div class="padding-container">
-
-    <br>
+  <form id="search_form">
     <input type="text" placeholder="Search by song or artist" id="query">
-    <ul class="search-results">
+  </form>
+
+  <ul class="search-results">
     {{#each results}}
     <li><input type="button" value="+" class="add_track" data-id="{{this.id}}">
       {{this.title}}
       </li>
     {{/each}}
-    </ul>
+  </ul>
 
+  {{#if tracks}}
     Next up...
+  {{/if}}
+  <br>
+  {{#each tracks}}
+    ({{ this.votes }})
+    {{this.title}}
+    {{#if this.did_vote}}
+    <span class="voted">Voted</span>
+    {{else}}
+    <input type="button" value="Vote" class="vote" data-id="{{this.id}}">
+    {{/if}}
     <br>
-    {{#each tracks}}
-      ({{ this.votes }})
-      {{this.title}}
-      {{#if this.did_vote}}
-      <span class="voted">Voted</span>
-      {{else}}
-      <input type="button" value="Vote" class="vote" data-id="{{this.id}}">
-      {{/if}}
-      <br>
-    {{/each}}
-  </div>
+  {{/each}}
+
 
 </template>
