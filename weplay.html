@@ -55,9 +55,9 @@
   <span class="playlist_name">listening to {{ playlist.name }}</a>
   </header>
 
-  <form id="search_form">
+  <div class='querywrapper'>
     <input type="text" placeholder="Search by song or artist" id="query">
-  </form>
+  </div>
 
   <ul class="search-results">
     {{#each results}}
@@ -67,20 +67,30 @@
     {{/each}}
   </ul>
 
-  {{#if tracks}}
-    Next up...
-  {{/if}}
-  <br>
-  {{#each tracks}}
-    ({{ this.votes }})
-    {{this.title}}
-    {{#if this.did_vote}}
-    <span class="voted">Voted</span>
-    {{else}}
-    <input type="button" value="Vote" class="vote" data-id="{{this.id}}">
+  <div class="next_tracks">
+    {{#if tracks}}
+      Next up...
     {{/if}}
     <br>
-  {{/each}}
+    <ul class="tracks">
+    {{#each tracks}}
+    <li>
+      <div class='voteblock'>
+        <span class="voted">{{ this.votes }}</span>
+      </div>
+
+      <div class='title'>
+      {{this.title}}
+      </div>
+
+      {{#if this.did_vote}}
+      {{else}}
+      <input type="button" value="Vote" class="vote" data-id="{{this.id}}">
+      {{/if}} 
+      </li>
+    {{/each}}
+  </ul>
+  </div>
 
 
 </template>

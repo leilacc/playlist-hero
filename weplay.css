@@ -74,7 +74,7 @@ h3.tagline {
   color: rgb(198, 216, 213);
 }
 
-#create_playlist_form, #search_form {
+#create_playlist_form {
   text-align: center;
 }
 
@@ -92,12 +92,19 @@ input {
   font-size: 16pt;
 }
 
+.voteblock {
+}
+
 input#playlist_name {
   width: 460px;
 }
 
 input#query {
   width: 500px;
+}
+
+div.querywrapper {
+  text-align: center;
 }
 
 .playlists_holder {
@@ -112,7 +119,7 @@ ul {
   list-style: none;
 }
 
-ul.search-results {
+ul.search-results, div.next_tracks {
   margin-left: auto;
   margin-right: auto;
   width: 500px;
@@ -153,6 +160,41 @@ input.add_track {
   margin: 5px 10px;
 }
 
+div.next_tracks {
+  font-size: 18px;
+}
+
 .padding-container {
   padding: 15px;
+}
+
+ul.tracks li {
+  background: rgba(0, 0, 0, 0.4);
+  margin-bottom: 1px;
+}
+
+ul.tracks li .voteblock,
+ul.tracks li .title,
+ul.tracks li .vote {
+  display: inline-block;
+  box-sizing: border-box;
+  padding: 5px;
+  font-size: 16pt;
+}
+
+ul.tracks li .voteblock {
+  padding: 3px 5px;
+  outline: none;
+  font-size: 16pt;
+  width: 50px;
+  text-align: center;
+  color: #f60;
+}
+
+ul.tracks li .title {
+  width: 385px;
+}
+
+ul.tracks li .vote {
+  width: 55px;
 }
