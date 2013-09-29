@@ -1,1 +1,128 @@
 /* CSS declarations go here */
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+  background: #353742;
+  color: #fefefe;
+  padding: 0;
+  margin: 0;
+}
+
+header {
+  text-align: center;
+  padding-top: 15px;
+}
+
+a {
+  text-decoration: none;
+}
+
+h1.logo {
+  font-size: 42pt;
+  text-transform: uppercase;
+  margin: 0 auto;
+  border-top: 10px solid red;
+  border-bottom: 10px solid red;
+  background: yellow;
+  color: red;
+  padding:  0;
+  width: 400px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+}
+
+.playlist_name {
+  font-size: 21pt;
+  font-weight: 400;
+  display: inline-block;
+
+}
+
+header.small {
+  text-align: left;
+}
+
+header.small h1.logo {
+  margin: 0 15px;
+  font-size: 21pt;
+  border-top-width: 5px;
+  border-bottom-width: 5px;
+  width: 200px;
+  display: inline-block;
+}
+
+h1.logo:hover {
+  color: black;
+}
+
+#login-buttons {
+  float: right;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+h3.tagline {
+  margin: 0;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: rgb(198, 216, 213);
+}
+
+#create_playlist_form {
+  text-align: center;
+}
+
+input {
+  font: inherit;
+  border-radius: 2px;
+  border: 1px solid #111;
+  padding: 3px 5px;
+  box-sizing: border-box;
+  outline: none;
+  font-size: 16pt;
+}
+
+input#playlist_name {
+  width: 330px;
+}
+
+.playlists_holder {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 20px;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+ul.playlists {
+  margin: 5px auto;
+  width: 400px;
+  text-align: left;
+}
+
+ul.playlists a {
+  display: block;
+  background: rgba(0, 0, 0, 0.5);
+  color: orange;
+  padding: 15px;
+  margin-bottom: 1px;
+  font-size: 16pt;
+}
+
+ul.playlists a:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+input.add_track {
+  background: green;
+  border-radius: 20px;
+  color: #fff;
+  width: 30px;
+  display: inline-block;
+  cursor: pointer;
+  font-size: 12pt;
+}

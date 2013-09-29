@@ -1,8 +1,9 @@
 <head>
   <script>
   </script>
+  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900' rel='stylesheet' type='text/css'>
   <script src="//connect.soundcloud.com/sdk.js"></script>
-  <title>WePlay</title>
+  <title>Playlist Hero</title>
 </head>
 
 <body>
@@ -19,35 +20,44 @@
 </template>
 
 <template name="home">
-  <h1>WePlay</h1>
-  <h3>Democratic playlists</h3>
+  <header>
+  <h1 class="logo">Playlist Hero</h1>
+  </header>
 
-  Find or create a new playlist
   <br>
   <form id="create_playlist_form">
       <input type="text" placeholder="Playlist name" id="playlist_name">
-      <input type="submit" value="Go" />
+      <input type="submit" value="Create" />
   </form>
 
-  <br>
-  <br>
+  <div class="playlists_holder">
+    Recent playlists
+  <ul class="playlists">
   {{#each playlists}}
-    {{this.name}}
-    <br>
+  <li><a href="/{{this.name}}">{{this.name}}</a></li>
   {{/each}}
+  </ul>
+</div>
 </template>
 
 <template name="playlist">
-  <h1>Playlist!</h1>
+  <header class="small">
+  <a href="/">
+  <h1 class="logo">Playlist Hero</h1>
+  </a>
+  <span class="playlist_name">{{ playlist.name }}</a>
+  </header>
 
   <br>
   <input type="text" placeholder="Search by song or artist" id="query">
   <br>
+  <ul class="search-results">
   {{#each results}}
+  <li><input type="button" value="+" class="add_track" data-id="{{this.id}}">
     {{this.title}}
-    <input type="button" value="Add" class="add_track" data-id="{{this.id}}">
-    <br>
+    </li>
   {{/each}}
+  </ul>
 
   Songs in the playlist
   <br>

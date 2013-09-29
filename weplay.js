@@ -7,6 +7,12 @@ if (Meteor.isClient) {
     SC.initialize({
       client_id: "e9b793758d29d627c75586e91d726191"
     });
+
+    $('body').on('click', 'a', function() {
+      history.pushState(null, null, encodeURI($(this).attr('href')));
+      setPageState();
+      return false;
+    });
   });
 
   var playlists_loaded = false;
@@ -24,7 +30,7 @@ if (Meteor.isClient) {
 
   function setPageState() {
     if (!playlists_loaded) return;
-    var playlist_name = window.location.pathname.substr(1);
+    var playlist_name = decodeURI(window.location.pathname.substr(1));
     var playlist = playlist_name === '' ? null : Playlists.findOne({"name": playlist_name});
     changePlaylist(playlist);
   }
@@ -56,12 +62,12 @@ if (Meteor.isClient) {
 
   function changePlaylist(playlist) {
       Session.set('curr_playlist', playlist);
-      var playlist_name = window.location.pathname.substr(1);
+      var playlist_name = decodeURI(window.location.pathname.substr(1));
       if ((playlist && playlist.name == playlist_name) ||
           (!playlist && playlist_name === '')) {
           return;
       }
-      history.pushState(null, null, '/' + (playlist ? playlist.name : ''));
+      history.pushState(null, null, '/' + (playlist ? encodeURI(playlist.name) : ''));
   }
 
   // Playlist view
@@ -111,6 +117,8 @@ if (Meteor.isClient) {
   function getCurrPlaylist() {
     return Session.get('curr_playlist');
   }
+
+  Template.playlist.playlist = getCurrPlaylist;
 
   Template.playlist.events({
     // Add track
