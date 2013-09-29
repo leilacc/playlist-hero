@@ -1,12 +1,10 @@
 var Playlists = new Meteor.Collection('playlists');
-var Tokens = new Meteor.Collection('tokens');
 
 if (Meteor.isClient) {
   // init/change view code
 
   var playlists_loaded = false;
   window.Playlists = Playlists;
-  window.Tokens= Tokens;
   Session.setDefault('curr_playlist', null);
 
   Meteor.subscribe('playlists', function() {
@@ -31,10 +29,6 @@ if (Meteor.isClient) {
 
   Template.home.playlists = function() {
     return Playlists.find({}).fetch();
-  };
-
-  Template.home.tokens = function() {
-    return Tokens.find({}).fetch();
   };
 
   // Homepage view
@@ -74,9 +68,6 @@ if (Meteor.isServer) {
     // code to run on server at startup
     Meteor.publish('playlists', function() {
       return Playlists.find({});
-    });
-    Meteor.publish('tokens', function() {
-      return Tokens.find({});
     });
   });
 }
