@@ -1,4 +1,7 @@
 <head>
+  <script>
+  </script>
+  <script src="//connect.soundcloud.com/sdk.js"></script>
   <title>WePlay</title>
 </head>
 
@@ -28,12 +31,36 @@
 
   <br>
   <br>
-  {{#each tokens}}
-    {{this.token}}
+  {{#each playlists}}
+    {{this.name}}
+    <br>
   {{/each}}
 </template>
 
 <template name="playlist">
   <h1>Playlist!</h1>
-</template>
 
+  <br>
+  <input type="text" placeholder="Search by song or artist" id="query">
+  <br>
+  {{#each results}}
+    {{this.title}}
+    <input type="button" value="Add" class="add_track" data-id="{{this.id}}">
+    <br>
+  {{/each}}
+
+  Songs in the playlist
+  <br>
+  {{#each tracks}}
+    ({{ this.votes }})
+    {{this.title}}
+    {{#if this.did_vote}}
+    <span class="voted">Voted</span>
+    {{else}}
+    <input type="button" value="Vote" class="vote" data-id="{{this.id}}">
+    {{/if}}
+    <br>
+  {{/each}}
+
+
+</template>
