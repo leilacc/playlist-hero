@@ -51,29 +51,30 @@
   <span class="playlist_name">{{ playlist.name }}</a>
   </header>
 
-  <br>
-  <input type="text" placeholder="Search by song or artist" id="query">
-  <br>
-  <ul class="search-results">
-  {{#each results}}
-  <li><input type="button" value="+" class="add_track" data-id="{{this.id}}">
-    {{this.title}}
-    </li>
-  {{/each}}
-  </ul>
+  <div class="padding-container">
 
-  Next up...
-  <br>
-  {{#each tracks}}
-    ({{ this.votes }})
-    {{this.title}}
-    {{#if this.did_vote}}
-    <span class="voted">Voted</span>
-    {{else}}
-    <input type="button" value="Vote" class="vote" data-id="{{this.id}}">
-    {{/if}}
     <br>
-  {{/each}}
+    <input type="text" placeholder="Search by song or artist" id="query">
+    <ul class="search-results">
+    {{#each results}}
+    <li><input type="button" value="+" class="add_track" data-id="{{this.id}}">
+      {{this.title}}
+      </li>
+    {{/each}}
+    </ul>
 
+    Next up...
+    <br>
+    {{#each tracks}}
+      ({{ this.votes }})
+      {{this.title}}
+      {{#if this.did_vote}}
+      <span class="voted">Voted</span>
+      {{else}}
+      <input type="button" value="Vote" class="vote" data-id="{{this.id}}">
+      {{/if}}
+      <br>
+    {{/each}}
+  </div>
 
 </template>

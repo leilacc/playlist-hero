@@ -126,3 +126,7 @@ input.add_track {
   cursor: pointer;
   font-size: 12pt;
 }
+
+.padding-container {
+  padding: 15px;
+}
