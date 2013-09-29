@@ -3,11 +3,14 @@
   </script>
   <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900' rel='stylesheet' type='text/css'>
   <script src="//connect.soundcloud.com/sdk.js"></script>
+  <script src="https://w.soundcloud.com/player/api.js"></script>
   <title>Playlist Hero</title>
 </head>
 
 <body>
   {{loginButtons}}
+  <div id='nowPlaying'>
+  </div>
   {{> container}}
 </body>
 
@@ -51,8 +54,6 @@
   <br>
   <input type="text" placeholder="Search by song or artist" id="query">
   <br>
-  <div id='nowPlaying'>
-  </div>
   <ul class="search-results">
   {{#each results}}
   <li><input type="button" value="+" class="add_track" data-id="{{this.id}}">

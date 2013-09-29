@@ -3,6 +3,24 @@ var Playlists = new Meteor.Collection('playlists');
 if (Meteor.isClient) {
   // init/change view code
 
+  function play(track_url) {
+    console.log(track_url);
+    SC.oEmbed(track_url, { auto_play: true }, function(oEmbed) {
+        console.log('oEmbed response: ', oEmbed);
+        $('#nowPlaying').html(oEmbed.html);
+
+        SC.Widget($('#nowPlaying iframe')[0]).bind(SC.Widget.Events.FINISH, function() {
+          playNext();
+        });
+    });
+  }
+
+  function playNext() {
+    var next_track = getNextTrack();
+    moveTrackToRecent(next_track);
+    play(getTrackUrl(next_track));
+  }
+
   $(function() {
     // Page is finished loading...
 
@@ -16,18 +34,8 @@ if (Meteor.isClient) {
       return false;
     });
 
-    function play(track_url) {
-      console.log(track_url);
-      SC.oEmbed(track_url, { auto_play: true }, function(oEmbed) {
-          console.log('oEmbed response: ', oEmbed);
-          $('#nowPlaying').append(oEmbed.html);
-      });
-    }
-
     if (Session.get('curr_playlist')) {
-      var next_track = getNextTrack();
-      moveTrackToRecent(next_track);
-      play(getTrackUrl(next_track));
+      playNext();
     }
   });
 
@@ -45,7 +53,7 @@ if (Meteor.isClient) {
 
     // Append to recent
     var set = {};
-    set['tracks.' + track.id] = track;
+    set['recent.' + track.id] = track;
     Playlists.update({'_id': getCurrPlaylist()._id},
                     {$set: set}, function(err) {
                       console.log(err);
@@ -83,6 +91,7 @@ if (Meteor.isClient) {
     var playlist_name = decodeURI(window.location.pathname.substr(1));
     var playlist = playlist_name === '' ? null : Playlists.findOne({"name": playlist_name});
     changePlaylist(playlist);
+
   }
 
   Template.container.curr_playlist = function() {
