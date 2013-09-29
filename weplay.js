@@ -5,11 +5,13 @@ if (Meteor.isClient) {
 
   function play(track_url) {
     console.log(track_url);
+    Session.set('playing', true);
     SC.oEmbed(track_url, { auto_play: true }, function(oEmbed) {
         console.log('oEmbed response: ', oEmbed);
         $('#nowPlaying').html(oEmbed.html);
 
         SC.Widget($('#nowPlaying iframe')[0]).bind(SC.Widget.Events.FINISH, function() {
+          Session.set('playing', false);
           playNext();
         });
     });
@@ -17,8 +19,12 @@ if (Meteor.isClient) {
 
   function playNext() {
     var next_track = getNextTrack();
-    moveTrackToRecent(next_track);
-    play(getTrackUrl(next_track));
+    if (next_track) {
+      moveTrackToRecent(next_track);
+      play(getTrackUrl(next_track));
+    } else {
+      Session.set('playing', false);
+    }
   }
 
   $(function() {
@@ -193,6 +199,9 @@ if (Meteor.isClient) {
                       });
 
       Session.set('search_results', null);
+      if (!Session.get('playing')) {
+        playNext();
+      }
       return false;
     }
   });
