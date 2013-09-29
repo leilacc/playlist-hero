@@ -51,6 +51,8 @@
   <br>
   <input type="text" placeholder="Search by song or artist" id="query">
   <br>
+  <div id='nowPlaying'>
+  </div>
   <ul class="search-results">
   {{#each results}}
   <li><input type="button" value="+" class="add_track" data-id="{{this.id}}">
@@ -59,7 +61,7 @@
   {{/each}}
   </ul>
 
-  Songs in the playlist
+  Next up...
   <br>
   {{#each tracks}}
     ({{ this.votes }})
