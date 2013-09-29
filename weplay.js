@@ -4,10 +4,60 @@ if (Meteor.isClient) {
   // init/change view code
 
   $(function() {
+    // Page is finished loading...
+
     SC.initialize({
       client_id: "e9b793758d29d627c75586e91d726191"
     });
+
+    function play(track_url) {
+      console.log(track_url);
+      SC.oEmbed(track_url, { auto_play: true }, function(oEmbed) {
+          console.log('oEmbed response: ', oEmbed);
+          $('#nowPlaying').append(oEmbed.html);
+      });
+    }
+
+    if (Session.get('curr_playlist')) {
+      var next_track = getNextTrack();
+      moveTrackToRecent(next_track);
+      play(getTrackUrl(next_track));
+    }
   });
+
+  function moveTrackToRecent(track) {
+    // Move a track that is about to be played from the tracks list to the
+    // recent list.
+
+    // Remove from tracks
+    var unset = {};
+    unset['tracks.' + track.id] = '';
+    Playlists.update({ _id: getCurrPlaylist()._id },
+                     { $unset: unset }, function(err) {
+                       console.log(err);
+                     });
+
+    // Append to recent
+    var set = {};
+    set['tracks.' + track.id] = track;
+    Playlists.update({'_id': getCurrPlaylist()._id},
+                    {$set: set}, function(err) {
+                      console.log(err);
+                    });
+
+    return false;
+  }
+
+  function getNextTrack() {
+    // Returns the top-voted track and removes it from queued track list
+    var tracks = Playlists.findOne({ _id: Session.get('curr_playlist')._id }).tracks;
+    return allValues(tracks).sort(compare_votes)[0];
+  }
+
+  function getTrackUrl(track) {
+    var track_url = track.stream_url;
+    return track_url.substring(0, track_url.length - 7);
+  }
 
   var playlists_loaded = false;
   window.Playlists = Playlists;
@@ -50,7 +100,7 @@ if (Meteor.isClient) {
   });
 
   function createPlaylist(name) {
-      var id = Playlists.insert({name: name, tracks: {}});
+      var id = Playlists.insert({name: name, tracks: {}, recent: {}});
       return Playlists.findOne({"_id": id});
   }
 
@@ -96,8 +146,7 @@ if (Meteor.isClient) {
     'input #query': function() {
       var query = $('#query').val();
       if (query.length < 3) return;
-      SC.get('/tracks', { q: query, limit: 20 }, function(tracks) {
-          console.log(tracks);
+      SC.get('/tracks', { q: query, limit: 20, streamable: true }, function(tracks) {
           Session.set('search_results', tracks);
       });
       return false;
@@ -126,6 +175,7 @@ if (Meteor.isClient) {
                         console.log(err);
                       });
 
+      Session.set('search_results', null);
       return false;
     }
   });
@@ -147,6 +197,7 @@ if (Meteor.isClient) {
       return false;
     }
   });
+
 }
 
 
