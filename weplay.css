@@ -3,7 +3,7 @@ body {
   font-family: 'Source Sans Pro', sans-serif;
   background: #353742;
   color: #fefefe;
-  padding: 0;
+  padding: 10px 10px 70px 10px;
   margin: 0;
 }
 
@@ -79,7 +79,8 @@ h3.tagline {
 }
 
 #nowPlaying {
-  padding: 20px auto;
+  padding: 0px 11px;
+  padding-top: 60px;
 }
 
 input {
@@ -90,9 +91,6 @@ input {
   box-sizing: border-box;
   outline: none;
   font-size: 16pt;
-}
-
-.voteblock {
 }
 
 input#playlist_name {
