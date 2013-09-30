@@ -81,7 +81,6 @@ if (Meteor.isClient) {
 
   var playlists_loaded = false;
   window.Playlists = Playlists;
-  Session.setDefault('curr_playlist', null);
 
   Meteor.subscribe('playlists', function() {
     playlists_loaded = true;
@@ -94,10 +93,14 @@ if (Meteor.isClient) {
 
   function setPageState() {
     if (!playlists_loaded) return;
-    var playlist_name = decodeURI(window.location.pathname.substr(1));
-    var playlist = playlist_name === '' ? null : Playlists.findOne({"name": playlist_name});
-    changePlaylist(playlist);
+    changePlaylist(getPlaylistFromURI());
 
+  }
+
+  function getPlaylistFromURI() {
+    // Returns the playlist specified in the URI
+    var playlist_name = decodeURI(window.location.pathname.substr(1));
+    return playlist = playlist_name === '' ? null : Playlists.findOne({"name": playlist_name});
   }
 
   Template.container.curr_playlist = function() {
