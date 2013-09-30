@@ -1,0 +1,3 @@
+-clear search results when query is ''
+-disable anonymous voting
+-prevent duplicate playlists with same name

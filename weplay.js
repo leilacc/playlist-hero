@@ -99,8 +99,11 @@ if (Meteor.isClient) {
 
   function getPlaylistFromURI() {
     // Returns the playlist specified in the URI
-    var playlist_name = decodeURI(window.location.pathname.substr(1));
-    return playlist = playlist_name === '' ? null : Playlists.findOne({"name": playlist_name});
+    return getPlaylistFromName(decodeURI(window.location.pathname.substr(1)));
+  }
+
+  function getPlaylistFromName(playlist_name) {
+    return playlist_name === '' ? null : Playlists.findOne({"name": playlist_name});
   }
 
   Template.container.curr_playlist = function() {
@@ -130,6 +133,7 @@ if (Meteor.isClient) {
 
   function changePlaylist(playlist) {
       Session.set('curr_playlist', playlist);
+      playNext();
       var playlist_name = decodeURI(window.location.pathname.substr(1));
       if ((playlist && playlist.name == playlist_name) ||
           (!playlist && playlist_name === '')) {
