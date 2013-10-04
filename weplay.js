@@ -4,7 +4,11 @@ if (Meteor.isClient) {
   // init/change view code
 
   function play(track_url) {
-    console.log(track_url);
+    // Called by playNext
+    if (!track_url) {
+      return false;
+    }
+
     Session.set('playing', true);
     SC.oEmbed(track_url, { auto_play: true }, function(oEmbed) {
         console.log('oEmbed response: ', oEmbed);
@@ -20,8 +24,11 @@ if (Meteor.isClient) {
   function playNext() {
     var next_track = getNextTrack();
     if (next_track) {
-      moveTrackToRecent(next_track);
+      removeTrackFromTracks(next_track);
       play(getTrackUrl(next_track));
+      //if (!play(getTrackUrl(next_track))) {
+      //  playNext();
+      //}
     } else {
       Session.set('playing', false);
     }
@@ -45,9 +52,22 @@ if (Meteor.isClient) {
     }
   });
 
-  function moveTrackToRecent(track) {
-    // Move a track that is about to be played from the tracks list to the
-    // recent list.
+  function addTrackToRecent(track) {
+    // Append track to the recent collection
+    var set = {};
+    set['recent.' + track.id] = track;
+    Playlists.update({'_id': getCurrPlaylist()._id},
+                    {$set: set}, function(err) {
+                      console.log(err);
+                    });
+
+    Session.set('curr_playlist', null);
+    return false;
+  }
+
+  function removeTrackFromTracks(track) {
+    // Remove a track that is about to be played from the tracks list
+    // and store it in curr_track
 
     // Remove from tracks
     var unset = {};
@@ -57,13 +77,7 @@ if (Meteor.isClient) {
                        console.log(err);
                      });
 
-    // Append to recent
-    var set = {};
-    set['recent.' + track.id] = track;
-    Playlists.update({'_id': getCurrPlaylist()._id},
-                    {$set: set}, function(err) {
-                      console.log(err);
-                    });
+    Session.set('curr_track', track);
 
     return false;
   }
@@ -76,7 +90,11 @@ if (Meteor.isClient) {
 
   function getTrackUrl(track) {
     var track_url = track.stream_url;
-    return track_url.substring(0, track_url.length - 7);
+    if (track_url) {
+      return track_url.substring(0, track_url.length - 7);
+    } else {
+      return null;
+    }
   }
 
   var playlists_loaded = false;
