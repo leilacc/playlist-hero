@@ -2,6 +2,7 @@ playlist-hero
 =============
 
 UofT Hacks project
-playlisthero.meteor.com
-
 There are still some bugs - see backlog
+
+<a href='playlisthero.meteor.com'>playlisthero.meteor.com</a>
+
