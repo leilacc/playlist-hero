@@ -2,6 +2,8 @@
 body {
   font-family: 'Source Sans Pro', sans-serif;
   background: #353742;
+  background-image: url('img3.jpg');
+  background-size: cover;
   color: #fefefe;
   padding: 10px 10px 70px 10px;
   margin: 0;

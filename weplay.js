@@ -37,7 +37,6 @@ if (Meteor.isClient) {
 
   $(function() {
     // Page is finished loading...
-
     SC.initialize({
       client_id: "e9b793758d29d627c75586e91d726191"
     });
@@ -131,9 +130,9 @@ if (Meteor.isClient) {
     return Session.get('curr_playlist');
   };
 
-  Template.home.playlists = function() {
-    return Playlists.find({}).fetch();
-  };
+  //Template.home.playlists = function() {
+    //return Playlists.find({}).fetch();
+  //};
 
   // Homepage view
 
@@ -158,6 +157,7 @@ if (Meteor.isClient) {
       var $playlist_button = $('#playlist_submit');
 
       if ($playlist_input.length < 1) {
+        // No playlist entered yet
         $playlist_button.val(' ');
         $playlist_button.css("background-color", "buttonface");
       }
@@ -167,6 +167,7 @@ if (Meteor.isClient) {
         $playlist_button.css("background-color", "orange");
         return false;
       } else {
+        // New playlist
         $playlist_button.val('Create');
         $playlist_button.css("background-color", "purple");
       }
