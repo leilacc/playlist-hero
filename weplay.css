@@ -92,8 +92,12 @@ input {
   font-size: 16pt;
 }
 
+input#playlist_submit {
+  width: 84px;
+}
+
 input#playlist_name {
-  width: 460px;
+  width: 415px;
 }
 
 input#query {

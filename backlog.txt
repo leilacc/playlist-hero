@@ -5,4 +5,6 @@
 -save current track, don't delete until over
 -don't allow skipping to end of song
 -make playlist names case insensitive
--make button on homepage indicate whether creating new playlist or going to existing page
+-recently played songs
+-password-protect playlist
+-style fb login button

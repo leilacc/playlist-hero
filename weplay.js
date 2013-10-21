@@ -140,11 +140,37 @@ if (Meteor.isClient) {
   Template.home.events({
     'submit #create_playlist_form' : function () {
         var $playlist_name = $('#playlist_name');
-        var playlist = createPlaylist($playlist_name.val());
-        changePlaylist(playlist);
-        $playlist_name.val('');
+        if ($playlist_name.val().length >= 1) {
+          var playlist = createPlaylist($playlist_name.val());
+          changePlaylist(playlist);
+          $playlist_name.val('');
+        }
 
         return false;
+    }
+  });
+
+  Template.home.events({
+    'input #playlist_name': function() {
+      // Displays whether given playlist exists or not already by changing
+      // submit button value and colour
+      var $playlist_input = $('#playlist_name').val();
+      var $playlist_button = $('#playlist_submit');
+
+      if ($playlist_input.length < 1) {
+        $playlist_button.val(' ');
+        $playlist_button.css("background-color", "buttonface");
+      }
+      else if (Playlists.findOne({"name": $playlist_input})) {
+        // Playlist exists
+        $playlist_button.val('Find');
+        $playlist_button.css("background-color", "orange");
+        return false;
+      } else {
+        $playlist_button.val('Create');
+        $playlist_button.css("background-color", "purple");
+      }
+      return false;
     }
   });
 
@@ -251,15 +277,16 @@ if (Meteor.isClient) {
     'click .vote': function(event) {
       var track = this;
       var inc = {};
-      inc['tracks.' + track.id + '.votes'] = 1;
       var push = {};
+
+      inc['tracks.' + track.id + '.votes'] = 1;
       push['tracks.' + track.id + '.voters'] = Meteor.userId();
+
       $(event.currentTarget).attr('disabled', true).val('Voted');
       Playlists.update({'_id': getCurrPlaylist()._id },
                        {$inc: inc, $push: push}, function(err) {
                          console.log(err);
                        });
-
       return false;
     }
   });
