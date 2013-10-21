@@ -189,18 +189,25 @@ if (Meteor.isClient) {
   }
 
   Template.playlist.tracks = function() {
-    tracks = Playlists.findOne({ _id: Session.get('curr_playlist')._id }).tracks;
+    tracks = Playlists.findOne({_id: Session.get('curr_playlist')._id}).tracks;
     return allValues(tracks).sort(compare_votes).map(function(track) {
-      track.did_vote = track.voters && track.voters.indexOf(Meteor.userId()) !== -1;
+      track.did_vote = (track.voters &&
+                        track.voters.indexOf(Meteor.userId())) !== -1;
       return track;
     });
   };
 
   Template.playlist.events({
     'input #query': function() {
+      // Displays search results for query if query has at least 3 char
       var query = $('#query').val();
-      if (query.length < 3) return;
-      SC.get('/tracks', { q: query, limit: 10, streamable: true }, function(tracks) {
+      if (query.length < 3) {
+        Session.set('search_results', []);
+        return;
+      }
+
+      SC.get('/tracks', { q: query, limit: 10, streamable: true },
+             function(tracks) {
           Session.set('search_results', tracks);
       });
       return false;
