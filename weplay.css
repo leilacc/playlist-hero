@@ -2,9 +2,9 @@
 body {
   font-family: 'Source Sans Pro', sans-serif;
   background: #353742;
-  background-image: url('img3.jpg');
+  background-image: url('img4.jpg');
   background-size: cover;
-  color: #fefefe;
+  color: #121212;
   padding: 10px 10px 70px 10px;
   margin: 0;
 }
@@ -22,12 +22,12 @@ a {
 }
 
 h1.logo {
-  color: #fefefe;
+  color: #121212;
   font-family: 'Lily Script One', sans-serif;
   font-size: 42pt;
   margin: 50px auto 20px auto;
-  border-top: 4px solid;
-  border-bottom: 4px solid;
+  border-bottom: 3px solid;
+  border-color: #333;
   padding: 0 0 7px 0;
   width: 500px;
   cursor: pointer;
@@ -57,9 +57,7 @@ header.small h1.logo {
 }
 
 h1.logo:hover {
-  color: #666;
-  border-top: 4px solid #fefefe;
-  border-bottom: 4px solid #fefefe;
+  color: #333;
 }
 
 #login-buttons {
