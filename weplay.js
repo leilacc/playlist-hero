@@ -14,7 +14,8 @@ if (Meteor.isClient) {
         console.log('oEmbed response: ', oEmbed);
         $('#nowPlaying').html(oEmbed.html);
 
-        SC.Widget($('#nowPlaying iframe')[0]).bind(SC.Widget.Events.FINISH, function() {
+        SC.Widget($('#nowPlaying iframe')[0]).bind(SC.Widget.Events.FINISH,
+                                                   function() {
           Session.set('playing', false);
           playNext();
         });
@@ -84,7 +85,8 @@ if (Meteor.isClient) {
 
   function getNextTrack() {
     // Returns the top-voted track and removes it from queued track list
-    var tracks = Playlists.findOne({ _id: Session.get('curr_playlist')._id }).tracks;
+    var tracks = Playlists.findOne({ _id:
+                                     Session.get('curr_playlist')._id }).tracks;
     return allValues(tracks).sort(compare_votes)[0];
   }
 
@@ -121,7 +123,8 @@ if (Meteor.isClient) {
   }
 
   function getPlaylistFromName(playlist_name) {
-    return playlist_name === '' ? null : Playlists.findOne({"name": playlist_name});
+    return playlist_name === '' ? null : Playlists.findOne({"name":
+                                                            playlist_name});
   }
 
   Template.container.curr_playlist = function() {
@@ -140,13 +143,18 @@ if (Meteor.isClient) {
         var playlist = createPlaylist($playlist_name.val());
         changePlaylist(playlist);
         $playlist_name.val('');
+
         return false;
     }
   });
 
   function createPlaylist(name) {
-      var id = Playlists.insert({name: name, tracks: {}, recent: {}});
-      return Playlists.findOne({"_id": id});
+      // Returns a newly created Playlist with name name.
+      // Returns false if a Playlist with that name already exists
+      if (!Playlists.findOne({"name": name})) {
+        Playlists.insert({name: name, tracks: {}, recent: {}});
+      }
+      return Playlists.findOne({"name": name});
   }
 
   function changePlaylist(playlist) {
